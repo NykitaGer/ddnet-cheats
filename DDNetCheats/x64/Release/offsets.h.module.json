@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "x64\\Release\\offsets.h.obj",
+            "outputs": [
+                "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\x64\\Release\\vc143.pdb",
+                "x64\\Release\\",
+                "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\x64\\Release\\offsets.h.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "offsets.h",
+                    "source-path": "d:\\cheatprojects\\ddnetcheats\\ddnetcheats\\offsets.h",
+                    "lookup-method": "absolute"
+                }
+            ],
+            "requires": []
+        }
+    ]
+}
