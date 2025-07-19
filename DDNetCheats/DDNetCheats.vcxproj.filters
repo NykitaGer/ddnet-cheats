@@ -21,5 +21,8 @@
     <ClCompile Include="offsets.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="define.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

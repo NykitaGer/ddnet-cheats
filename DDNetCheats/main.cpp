@@ -2,6 +2,8 @@
 #include <Windows.h>
 #include <tlhelp32.h>
 #include "offsets.h"
+#include "define.h"
+#include <vector>
 
 uint32_t GetPID(const char* processName) {
 	PROCESSENTRY32 entry{};
@@ -88,6 +90,9 @@ int main() {
 	LPVOID playerBase;
 	ReadMemory(pid, (LPVOID)(moduleBase + Offsets::PlayerBase), &playerBase, sizeof(playerBase));
 	std::cout << "[PLAYER BASE] " << std::hex << playerBase << std::dec << std::endl;
+
+	std::vector<Tee> tees;
+	Player player; 
 
 	LPVOID playerX = (LPVOID)((uintptr_t)playerBase + Offsets::Player::PosX);
 	LPVOID playerY = (LPVOID)((uintptr_t)playerBase + Offsets::Player::PosY);

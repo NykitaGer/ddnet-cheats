@@ -3,6 +3,7 @@
 
 namespace Offsets {
 	const DWORD PlayerBase = 0x4F2908;
+	const DWORD AnotherPlayerCoord = 0xF8;
 	namespace Player {
 		const DWORD PosX = 0x582880;
 		const DWORD PosY = PosX + 0x4;
