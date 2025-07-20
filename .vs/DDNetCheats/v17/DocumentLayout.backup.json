@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{3D91C4C2-FF8A-42E0-B8FB-EDAA094ECB23}|DDNetCheats\\DDNetCheats.vcxproj|solutionrelative:DDNetCheats\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{3D91C4C2-FF8A-42E0-B8FB-EDAA094ECB23}|DDNetCheats\\DDNetCheats.vcxproj|D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\define.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{3D91C4C2-FF8A-42E0-B8FB-EDAA094ECB23}|DDNetCheats\\DDNetCheats.vcxproj|solutionrelative:DDNetCheats\\define.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D91C4C2-FF8A-42E0-B8FB-EDAA094ECB23}|DDNetCheats\\DDNetCheats.vcxproj|D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\offsets.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3D91C4C2-FF8A-42E0-B8FB-EDAA094ECB23}|DDNetCheats\\DDNetCheats.vcxproj|solutionrelative:DDNetCheats\\offsets.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
@@ -18,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 227,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -27,12 +31,25 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "define.h",
+              "DocumentMoniker": "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\define.h",
+              "RelativeDocumentMoniker": "DDNetCheats\\define.h",
+              "ToolTip": "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\define.h",
+              "RelativeToolTip": "DDNetCheats\\define.h",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2025-07-19T13:35:41.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "offsets.h",
               "DocumentMoniker": "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\offsets.h",
               "RelativeDocumentMoniker": "DDNetCheats\\offsets.h",
               "ToolTip": "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\offsets.h",
               "RelativeToolTip": "DDNetCheats\\offsets.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-07-18T01:17:18.13Z",
               "EditorCaption": ""
@@ -45,7 +62,7 @@
               "RelativeDocumentMoniker": "DDNetCheats\\main.cpp",
               "ToolTip": "D:\\CheatProjects\\DDNetCheats\\DDNetCheats\\main.cpp",
               "RelativeToolTip": "DDNetCheats\\main.cpp",
-              "ViewState": "AgIAAGQAAAAAAAAAAAAAAHcAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAAAI4AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-07-17T18:34:41.916Z",
               "EditorCaption": ""
