@@ -92,21 +92,25 @@ int main() {
 	std::cout << "[PLAYER BASE] " << std::hex << playerBase << std::dec << std::endl;
 
 	Player player(
+		(LPVOID)((uintptr_t)playerBase + Offsets::Player::ID),
 		(LPVOID)((uintptr_t)playerBase + Offsets::Player::PosX),
 		(LPVOID)((uintptr_t)playerBase + Offsets::Player::PosY),
 		(LPVOID)((uintptr_t)playerBase + Offsets::Player::CursorX),
-		(LPVOID)((uintptr_t)playerBase + Offsets::Player::CursorY)
+		(LPVOID)((uintptr_t)playerBase + Offsets::Player::CursorY),
+		(LPVOID)((uintptr_t)playerBase + Offsets::Player::isVisible)
 	);
 
-	std::vector<Tee> tees;
-	const uint32_t teeAmount = 3; // currently hard coded for testing
-	int32_t vPlayerX, vPlayerY;
-	float vPlayerCursorX, vPlayerCursorY;
+	LPVOID lpTeeAmount = (LPVOID)((uintptr_t)playerBase + Offsets::Game::playerAmount);
+	int32_t teeAmount = 0;
+	ReadMemory(pid, lpTeeAmount, &teeAmount, sizeof(teeAmount));
+	std::cout << "Tee Amount : " << teeAmount << std::endl;
 
-	for (int i = 1; i <= teeAmount; i++) {
+	std::vector<Tee> tees;
+	for (int i = 0; i < teeAmount; i++) {
 		Tee tee(
-			(LPVOID)((uintptr_t)player.posX + Offsets::AnotherPlayerCoord * i),
-			(LPVOID)((uintptr_t)player.posY + Offsets::AnotherPlayerCoord * i)
+			(LPVOID)((uintptr_t)player.posX + Offsets::NextTee * i),
+			(LPVOID)((uintptr_t)player.posY + Offsets::NextTee * i),
+			(LPVOID)((uintptr_t)player.isVisible + Offsets::NextTee * i)
 		);
 		tees.push_back(tee);
 	}
@@ -114,8 +118,28 @@ int main() {
 	bool aim = false;
 	clock_t rate = clock();
 
+	int32_t vPlayerID;
+	int32_t vPlayerX, vPlayerY;
+	float vPlayerCursorX, vPlayerCursorY;
+
+	clock_t refreshRate = clock();
+
 	while (true) {
-		if (GetKeyState('O') & 0x8000 && (clock() - rate > 200)) {
+		if ((clock() - refreshRate) < 1) continue;
+		else refreshRate = clock();
+
+		ReadMemory(pid, player.ID, &vPlayerID, sizeof(vPlayerID));
+		ReadMemory(pid, lpTeeAmount, &teeAmount, sizeof(teeAmount));
+		if (teeAmount == 0) continue;
+		if (vPlayerID < 0) continue;
+		if (player.posX != (LPVOID)((uintptr_t)playerBase + Offsets::Player::PosX + Offsets::NextTee * vPlayerID)) {
+			std::cout << "ID: " << vPlayerID << std::endl;
+			player.posX = (LPVOID)((uintptr_t)playerBase + Offsets::Player::PosX + Offsets::NextTee * vPlayerID);
+			player.posY = (LPVOID)((uintptr_t)playerBase + Offsets::Player::PosY + Offsets::NextTee * vPlayerID);
+			player.isVisible = (LPVOID)((uintptr_t)playerBase + Offsets::Player::isVisible + Offsets::NextTee * vPlayerID);
+		}
+
+		if ((GetKeyState('O') & 0x8000 || GetKeyState(VK_XBUTTON1) & 0x8000) && (clock() - rate > 200)) {
 			aim = !aim;
 			rate = clock();
 		}
@@ -124,6 +148,10 @@ int main() {
 			ReadMemory(pid, player.posX, &vPlayerX, sizeof(vPlayerX));
 			ReadMemory(pid, player.posY, &vPlayerY, sizeof(vPlayerY));
 
+			if (vPlayerX == 0 || vPlayerY == 0) {
+				continue;
+			}
+
 			ReadMemory(pid, player.cursorX, &vPlayerCursorX, sizeof(vPlayerCursorX));
 			ReadMemory(pid, player.cursorY, &vPlayerCursorY, sizeof(vPlayerCursorY));
 
@@ -131,27 +159,39 @@ int main() {
 			int32_t pCurY = vPlayerY + (int)vPlayerCursorY;
 
 			int32_t newX, newY;
-			float x = 0, y = 0, distance = 0xFFFF;
+			float x = 0, y = 0, distance = 0xFFFFFFFF;
+			int32_t vIsVisible;
+			bool check = false;
+			
+			for (int i = 0; i < teeAmount; i++) { // TODO: find out why posX and posY sometimes can be 0 instead of normal value
+				if (i == vPlayerID) continue;
 
-			for (Tee tee : tees) { // TODO: find out why posX and posY sometimes can be 0 instead of normal value
-				ReadMemory(pid, tee.posX, &newX, sizeof(newX));
-				ReadMemory(pid, tee.posY, &newY, sizeof(newY));
+				Tee* tee = &tees[i];
+				ReadMemory(pid, tee->isVisible, &vIsVisible, sizeof(vIsVisible));
+				if (vIsVisible == 0) continue;
+
+				ReadMemory(pid, tee->posX, &newX, sizeof(newX));
+				ReadMemory(pid, tee->posY, &newY, sizeof(newY));
 
 				if (newX == 0 || newY == 0) {
-					std::cout << "[POINTER] " << std::hex << tee.posX << std::dec << " | " << newX << " : " << newY << std::endl;
+					//std::cout << "[POINTER] " << std::hex << tee->posX << " - " << tee->posY << std::dec << " | " << newX << " : " << newY << " | " << std::endl;
+					check = true;
+					break;
 				}
 
 				float tmp = sqrt((pCurX - newX) * (pCurX - newX) + (pCurY - newY) * (pCurY - newY));
 				if (distance > tmp) {
-					//std::cout << tmp << " : " << newX << " - " << newY << " : " << pCurX << " - " << pCurY << std::endl;
-					//std::cout << vPlayerCursorX << " : " << vPlayerCursorY << std::endl;
-					x = (float)(newX - vPlayerX);
-					y = (float)(newY - vPlayerY);
+					//std::cout << "[DISTANCE]" << tmp << " : " << newX << " - " << newY << " : " << pCurX << " - " << pCurY << " | " << std::endl;
+					// TODO: make equations in float for better coordinates
+					x = (float)(newX - vPlayerX); //+ (vPlayerCursorX - (int)vPlayerCursorX);
+					y = (float)(newY - vPlayerY); //+ (vPlayerCursorY - (int)vPlayerCursorY);
 					distance = tmp;
 				}
 			}
 
-			//std::cout << x << " : " << y << std::endl;
+			if (check) continue;
+
+			//std::cout << "[COORDS]" << x << " : " << y << " | " << newX << " : " << newY << " | " << vPlayerX << " : " << vPlayerY << " [AMOUNT] " << teeAmount << std::endl << std::endl;
 			WriteMemory(pid, player.cursorX, &x, sizeof(x));
 			WriteMemory(pid, player.cursorY, &y, sizeof(y));
 		}

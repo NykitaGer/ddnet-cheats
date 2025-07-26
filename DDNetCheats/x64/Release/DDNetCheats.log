@@ -1,9 +1,10 @@
 ﻿  Scanning sources for module dependencies...
   main.cpp
-D:\CheatProjects\DDNetCheats\DDNetCheats\main.cpp(148,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\CheatProjects\DDNetCheats\DDNetCheats\main.cpp(162,33): warning C4305: 'initializing': truncation from 'unsigned int' to 'float'
+D:\CheatProjects\DDNetCheats\DDNetCheats\main.cpp(182,15): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Generating code
-  1 of 96 functions ( 1.0%) were compiled, the rest were copied from previous compilation.
+  1 of 94 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   DDNetCheats.vcxproj -> D:\CheatProjects\DDNetCheats\x64\Release\DDNetCheats.exe
